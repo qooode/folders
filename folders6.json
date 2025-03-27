@@ -1,0 +1,47 @@
+[
+  {
+    "id": "folder-id-1",
+    "name": "Netflix",
+    "category": "Streaming",
+    "catalogIds": [],
+    "layout": "Landscape",
+    "displayMode": "Rows",
+    "iconName": "play.rectangle.fill",
+    "backgroundColor": "#E50914",
+    "nameDisplayMode": "Inside Folder",
+    "mediaTypeFilter": "All Content",
+    "showIcon": true, 
+    "textSize": "Large",
+    "textWeight": "Bold"
+  },
+  {
+    "id": "folder-id-2",
+    "name": "Disney+",
+    "category": "Streaming",
+    "catalogIds": [],
+    "layout": "Landscape",
+    "displayMode": "Grid",
+    "iconName": "sparkles",
+    "backgroundColor": "#113CCF",
+    "nameDisplayMode": "Inside Folder",
+    "mediaTypeFilter": "All Content",
+    "showIcon": true,
+    "textSize": "Large",
+    "textWeight": "Bold"
+  },
+  {
+    "id": "folder-id-3",
+    "name": "Action Movies",
+    "category": "Genres",
+    "catalogIds": [],
+    "layout": "Poster",
+    "displayMode": "Grid",
+    "iconName": "flame.fill",
+    "backgroundColor": "#FF3B30",
+    "nameDisplayMode": "Below Folder",
+    "mediaTypeFilter": "Movies Only",
+    "showIcon": true,
+    "textSize": "Medium",
+    "textWeight": "Medium"
+  }
+]
