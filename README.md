@@ -1,81 +1,202 @@
-# Folder Import
+# Folder import
 
-This guide explains how to create, share, and import folder configurations, allowing you to quickly set up folder collections with customized appearances.
-
-## Table of Contents
-- [Overview](#overview)
-- [JSON Structure](#json-structure)
-- [Required and Optional Fields](#required-and-optional-fields)
-- [Examples](#examples)
-- [Hosting Your JSON File](#hosting-your-json-file)
-- [Importing Folders](#importing-folders)
-- [How Import Works](#how-import-works)
-- [Troubleshooting](#troubleshooting)
+This repository provides a specification for creating custom folder configurations that can be imported into your media organization system. With this system, you can easily share, distribute, and apply consistent folder layouts across multiple devices.
 
 ## Overview
 
-The folder import feature allows you to:
-- Import folders with predefined visual styles and configurations
-- Share folder setups with other users
-- Set up multiple folders at once
-- Create themed folder collections (streaming services, genres, etc.)
+The folder configuration system allows you to:
 
-When you import folders, only the folder configurations are imported - not the content inside them. You'll still need to add your own catalogs to the imported folders afterward.
+- Create visually appealing content organization structures
+- Customize folder appearance including layouts, colors, icons, and text styles
+- Group folders into categories
+- Share your folder setups with the community
+- Import pre-designed folder sets from URLs
+
+This README explains how to create valid JSON configuration files that will work with the import system.
 
 ## JSON Structure
 
-The import file must be a valid JSON file with either a single folder object or an array of folder objects. Here's the basic structure:
+Folder configurations are defined in JSON format. A configuration file can contain a single folder object or an array of multiple folder objects.
+
+### Basic Structure
 
 ```json
 [
   {
-    "id": "optional-uuid-string",
+    "id": "unique-folder-id",
     "name": "Folder Name",
     "category": "Category Name",
     "catalogIds": [],
     "displayMode": "Rows",
     "layout": "Poster",
-    // Other properties...
-  },
-  // More folder objects...
+    "backgroundColor": "#FF0000",
+    "backgroundImageURL": "https://example.com/image.jpg",
+    "logoURL": "https://example.com/logo.png",
+    "mediaTypeFilter": "All Content",
+    "iconName": "folder.fill",
+    "showIcon": true,
+    "nameDisplayMode": "Below Folder",
+    "vignetteColor": "#000000",
+    "textSize": "Large",
+    "textWeight": "Bold",
+    "textColor": "#FFFFFF"
+  }
 ]
 ```
 
 ## Required and Optional Fields
 
 ### Required Fields
-These fields MUST be included in your JSON for each folder:
 
-| Field | Description | Possible Values |
-|-------|-------------|----------------|
-| `name` | Display name of the folder | Any string |
-| `category` | Category group for the folder | Any string |
-| `catalogIds` | Array of catalog IDs | `[]` (Empty array for imported folders) |
-| `displayMode` | How content is displayed | `"Rows"` or `"Grid"` |
-| `layout` | Folder shape/dimensions | `"Poster"`, `"Landscape"`, or `"Square"` |
-| `mediaTypeFilter` | Type of content to show | `"All Content"`, `"Movies Only"`, or `"TV Shows Only"` |
-| `iconName` | SF Symbol name for folder icon | Any valid SF Symbol name (e.g., `"folder.fill"`) |
-| `showIcon` | Whether to display the icon | `true` or `false` |
-| `nameDisplayMode` | Where to show the folder name | `"Inside Folder"` or `"Below Folder"` |
-| `textSize` | Size of text in the folder | `"Small"`, `"Medium"`, or `"Large"` |
-| `textWeight` | Weight of text in the folder | `"Regular"`, `"Medium"`, or `"Bold"` |
+These fields must be included in every folder object:
+
+| Field | Type | Description | Valid Values |
+|-------|------|-------------|--------------|
+| `name` | String | Display name of the folder | Any text |
+| `catalogIds` | Array | IDs of catalogs in the folder (use empty array for imports) | `[]` |
+| `displayMode` | String | How content is displayed within the folder | `"Rows"`, `"Grid"` |
+| `layout` | String | Shape/dimensions of the folder | `"Poster"`, `"Landscape"`, `"Square"` |
+| `iconName` | String | SF Symbol name for folder icon | Any valid SF Symbol name |
+| `showIcon` | Boolean | Whether to show the folder icon | `true`, `false` |
+| `nameDisplayMode` | String | Where the folder name is displayed | `"Below Folder"`, `"Inside Folder"` |
+| `mediaTypeFilter` | String | Type of media to display | `"All Content"`, `"Movies Only"`, `"TV Shows Only"` |
+| `textSize` | String | Size of text inside the folder | `"Small"`, `"Medium"`, `"Large"` |
+| `textWeight` | String | Weight of text inside the folder | `"Regular"`, `"Medium"`, `"Bold"` |
 
 ### Optional Fields
-These fields can be omitted from your JSON:
 
-| Field | Description | Example |
-|-------|-------------|---------|
-| `id` | Unique identifier | `"550e8400-e29b-41d4-a716-446655440000"` |
-| `backgroundColor` | Hex color code for background | `"#FF3B30"` |
-| `backgroundImageURL` | URL to background image | `"https://example.com/bg.jpg"` |
-| `logoURL` | URL to logo image | `"https://example.com/logo.png"` |
-| `vignetteColor` | Hex color code for vignette effect | `"#000000"` |
-| `textColor` | Hex color code for text | `"#FFFFFF"` |
+These fields can be omitted and will use default values:
+
+| Field | Type | Description | Default |
+|-------|------|-------------|---------|
+| `id` | String | Unique identifier for the folder | Auto-generated UUID |
+| `category` | String | Category name to organize folders | `"Folders"` |
+| `backgroundColor` | String | Hex color code for folder background | Random color |
+| `backgroundImageURL` | String | URL for custom background image | `null` |
+| `logoURL` | String | URL for custom logo image | `null` |
+| `vignetteColor` | String | Hex color code for vignette overlay effect | `null` |
+| `textColor` | String | Hex color code for text color | System default |
+
+### Field Details
+
+#### `layout`
+Controls the shape and dimensions of the folder:
+- `"Poster"`: Portrait orientation with 2:3 ratio (240×360 points)
+- `"Landscape"`: Landscape orientation with 16:9 ratio (427×240 points)
+- `"Square"`: Square shape with 1:1 ratio (240×240 points)
+
+#### `displayMode`
+Controls how content is displayed within a folder:
+- `"Rows"`: Content is displayed in horizontal scrolling rows
+- `"Grid"`: Content is displayed in a grid layout
+
+#### `mediaTypeFilter`
+Filters the type of content shown in the folder:
+- `"All Content"`: Shows both movies and TV shows
+- `"Movies Only"`: Shows only movies
+- `"TV Shows Only"`: Shows only TV shows
+
+#### `nameDisplayMode`
+Controls where the folder name is displayed:
+- `"Below Folder"`: Name appears below the folder
+- `"Inside Folder"`: Name appears inside the folder
+
+#### `textSize`
+Controls the size of text:
+- `"Small"`: 22pt
+- `"Medium"`: 28pt
+- `"Large"`: 34pt
+
+#### `textWeight`
+Controls the weight of text:
+- `"Regular"`: Regular weight
+- `"Medium"`: Medium weight
+- `"Bold"`: Bold weight
+
+#### `iconName`
+Uses SF Symbols for icons. Some examples:
+- `"folder.fill"`: Filled folder icon
+- `"star.fill"`: Filled star icon
+- `"heart.fill"`: Filled heart icon
+- `"film"`: Film icon
+- `"tv"`: TV icon
+- `"play.rectangle.fill"`: Filled play rectangle
 
 ## Examples
 
-### Streaming Services Example
+### Minimal Example
+```json
+[
+  {
+    "name": "Favorites",
+    "catalogIds": [],
+    "displayMode": "Grid",
+    "layout": "Poster",
+    "iconName": "star.fill",
+    "showIcon": true,
+    "nameDisplayMode": "Below Folder",
+    "mediaTypeFilter": "All Content",
+    "textSize": "Large",
+    "textWeight": "Bold"
+  }
+]
+```
 
+### Comprehensive Example
+```json
+[
+  {
+    "id": "netflix-folder",
+    "name": "Netflix",
+    "category": "Streaming",
+    "catalogIds": [],
+    "displayMode": "Rows",
+    "layout": "Landscape",
+    "backgroundColor": "#E50914",
+    "iconName": "play.rectangle.fill",
+    "showIcon": true,
+    "nameDisplayMode": "Inside Folder",
+    "mediaTypeFilter": "All Content",
+    "textSize": "Large",
+    "textWeight": "Bold",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "id": "disney-folder",
+    "name": "Disney+",
+    "category": "Streaming",
+    "catalogIds": [],
+    "displayMode": "Grid",
+    "layout": "Landscape",
+    "backgroundColor": "#113CCF",
+    "iconName": "sparkles",
+    "showIcon": true,
+    "nameDisplayMode": "Inside Folder",
+    "mediaTypeFilter": "All Content",
+    "textSize": "Large",
+    "textWeight": "Bold",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "id": "action-movies",
+    "name": "Action Movies",
+    "category": "Genres",
+    "catalogIds": [],
+    "displayMode": "Grid",
+    "layout": "Poster",
+    "backgroundColor": "#FF3B30",
+    "iconName": "flame.fill",
+    "showIcon": true,
+    "nameDisplayMode": "Below Folder",
+    "mediaTypeFilter": "Movies Only",
+    "textSize": "Medium",
+    "textWeight": "Medium",
+    "textColor": "#FFFFFF"
+  }
+]
+```
+
+### Example with Custom Images
 ```json
 [
   {
@@ -84,141 +205,83 @@ These fields can be omitted from your JSON:
     "catalogIds": [],
     "displayMode": "Rows",
     "layout": "Landscape",
+    "backgroundColor": "#000000",
+    "backgroundImageURL": "https://example.com/netflix-bg.jpg",
+    "logoURL": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png",
     "iconName": "play.rectangle.fill",
-    "backgroundColor": "#E50914",
+    "showIcon": false,
     "nameDisplayMode": "Inside Folder",
-    "showIcon": true,
     "mediaTypeFilter": "All Content",
     "textSize": "Large",
     "textWeight": "Bold"
-  },
-  {
-    "name": "Disney+",
-    "category": "Streaming",
-    "catalogIds": [],
-    "displayMode": "Grid",
-    "layout": "Landscape",
-    "iconName": "sparkles",
-    "backgroundColor": "#113CCF",
-    "nameDisplayMode": "Inside Folder",
-    "showIcon": true,
-    "mediaTypeFilter": "All Content",
-    "textSize": "Large",
-    "textWeight": "Bold"
-  }
-]
-```
-
-### Movie Genres Example
-
-```json
-[
-  {
-    "name": "Action",
-    "category": "Genres",
-    "catalogIds": [],
-    "displayMode": "Grid",
-    "layout": "Poster",
-    "iconName": "flame.fill",
-    "backgroundColor": "#FF3B30",
-    "nameDisplayMode": "Below Folder",
-    "showIcon": true,
-    "mediaTypeFilter": "Movies Only",
-    "textSize": "Medium",
-    "textWeight": "Medium"
-  },
-  {
-    "name": "Comedy",
-    "category": "Genres",
-    "catalogIds": [],
-    "displayMode": "Grid",
-    "layout": "Poster",
-    "iconName": "face.smiling",
-    "backgroundColor": "#FFCC00",
-    "nameDisplayMode": "Below Folder",
-    "showIcon": true,
-    "mediaTypeFilter": "Movies Only",
-    "textSize": "Medium",
-    "textWeight": "Medium"
   }
 ]
 ```
 
 ## Hosting Your JSON File
 
-You'll need to host your JSON file somewhere that provides a direct URL to the raw file content. Some options include:
+Your JSON file can be hosted on any service that provides a direct URL to the raw JSON content:
 
-1. **GitHub Gist**
-   - Create a gist at [gist.github.com](https://gist.github.com)
-   - Click "Raw" to get the direct URL
+1. **GitHub Gist**: Create a gist and use the "Raw" link
+2. **GitHub Repository**: Host in a repository and use the raw file URL
+3. **Personal Website**: Host on your own web server
+4. **JSON Hosting Services**: Services like JSONBin.io or similar
 
-2. **Pastebin**
-   - Create a paste at [pastebin.com](https://pastebin.com)
-   - After creating, click "Raw" to get the direct URL
-
-3. **Dropbox**
-   - Upload your file to Dropbox
-   - Generate a shared link and modify it to start with `dl.dropboxusercontent.com` instead of `www.dropbox.com`
-
-4. **Personal Website**
-   - Upload your JSON file to your website
-   - Use the direct URL to the file
-
-Make sure the URL leads directly to the raw JSON content, not to a webpage containing the JSON.
+Make sure the URL points directly to the raw JSON content, not to an HTML page or viewer.
 
 ## Importing Folders
 
-To import folders:
+To import your folder configuration:
 
-1. Navigate to **Settings > Folders**
-2. Click on **Import Folders from URL**
-3. Enter the URL to your hosted JSON file
-4. Click **Import**
+1. Go to the Settings menu in the app
+2. Navigate to Folders > Import Folders
+3. Enter the URL to your JSON file
+4. Click "Import"
 
-If successful, your folders will be added to your library immediately.
+The system will download the JSON file, validate it, and add the folders to your library.
 
 ## How Import Works
 
-When importing folders:
+When importing folder configurations:
 
-- If a folder with the same name and category already exists, it will be updated with the imported settings, but its existing catalog references will be preserved
-- If it's a new folder, it will be added with empty catalogIds
-- All imported folders will have their visual styles applied immediately
-- After import, you'll need to add catalogs to the folders manually by editing each folder
+1. The system downloads the JSON from the provided URL
+2. It validates the JSON structure and required fields
+3. For each folder in the JSON:
+   - If a folder with the same name and category already exists, it will be updated with the new settings
+   - If no matching folder exists, a new folder will be created
+4. Existing catalog references are preserved when updating folders
+5. New folders start with empty catalog references that you can populate later
 
 ## Troubleshooting
 
-### Common Issues
+### Common Import Errors
 
-1. **"Invalid URL format" error**
-   - Make sure your URL is correct and starts with `http://` or `https://`
-   - Try copying and pasting the URL into a browser to verify it works
+| Error | Possible Cause | Solution |
+|-------|----------------|----------|
+| "Invalid URL format" | The URL provided is not properly formatted | Check that your URL is correct and points to a raw JSON file |
+| "Invalid server response" | The server returned a non-200 status code | Ensure the file is accessible and the host is working properly |
+| "Invalid JSON format" | The JSON is malformed or missing required fields | Validate your JSON structure and ensure all required fields are present |
+| "keyNotFound" errors | Missing a required field | Add the missing field to your JSON objects |
+| "dataCorrupted" errors | Value not valid for the field type | Check field values match the expected enum cases (exact spelling matters) |
 
-2. **"Invalid server response" error**
-   - The server returned a non-200 status code
-   - Make sure your URL is publicly accessible
+### JSON Validation
 
-3. **JSON decode errors**
-   - Check that your JSON is valid (use a validator like [jsonlint.com](https://jsonlint.com))
-   - Verify that all required fields are included
-   - Check field values match the expected format/options
+Before importing, validate your JSON using:
+- [JSONLint](https://jsonlint.com/)
+- [JSON Validator](https://jsonformatter.curiousconcept.com/)
 
-4. **Missing fields error**
-   - Make sure each folder object includes all required fields
-   - `catalogIds` must be included (can be an empty array `[]`)
+### Field Value Validation
 
-5. **No folders appeared after import**
-   - Check the app logs for errors
-   - Verify your JSON structure matches the examples
-   - Try importing a simpler example first
+Ensure your enum values match exactly:
+- Layout: `"Poster"`, `"Landscape"`, `"Square"`
+- DisplayMode: `"Rows"`, `"Grid"`
+- NameDisplayMode: `"Below Folder"`, `"Inside Folder"` (not "Outside Folder")
+- MediaTypeFilter: `"All Content"`, `"Movies Only"`, `"TV Shows Only"`
+- TextSize: `"Small"`, `"Medium"`, `"Large"`
+- TextWeight: `"Regular"`, `"Medium"`, `"Bold"`
 
-### Testing Your JSON
+---
 
-You can validate your JSON file is correct by:
-1. Using an online validator like [jsonlint.com](https://jsonlint.com)
-2. Testing with a single folder first before creating a larger collection
-3. Using the example templates from this guide as a starting point
+## Contributing
 
-## Community Sharing
-
-Feel free to share your folder configurations with the community! Creating themed folder collections (like streaming services, movie studios, or genres) can help other users quickly set up their libraries.
+Feel free to contribute to this project with cool examples.
