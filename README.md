@@ -168,7 +168,7 @@ Make sure the URL leads directly to the raw JSON content, not to a webpage conta
 
 ## Importing Folders
 
-To import folders in Strimi:
+To import folders:
 
 1. Navigate to **Settings > Folders**
 2. Click on **Import Folders from URL**
@@ -221,4 +221,4 @@ You can validate your JSON file is correct by:
 
 ## Community Sharing
 
-Feel free to share your folder configurations with the Strimi community! Creating themed folder collections (like streaming services, movie studios, or genres) can help other users quickly set up their libraries.
+Feel free to share your folder configurations with the community! Creating themed folder collections (like streaming services, movie studios, or genres) can help other users quickly set up their libraries.
