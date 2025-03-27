@@ -3,6 +3,7 @@
     "id": "folder-id-1",
     "name": "Netflix",
     "category": "Streaming",
+    "catalogIds": [],  // This field is required
     "layout": "Landscape",
     "displayMode": "Rows",
     "iconName": "play.rectangle.fill",
@@ -15,6 +16,7 @@
     "id": "folder-id-2",
     "name": "Disney+",
     "category": "Streaming",
+    "catalogIds": [],  // This field is required
     "layout": "Landscape",
     "displayMode": "Grid",
     "iconName": "sparkles",
@@ -27,6 +29,7 @@
     "id": "folder-id-3",
     "name": "Action Movies",
     "category": "Genres",
+    "catalogIds": [],  // This field is required
     "layout": "Poster",
     "displayMode": "Grid",
     "iconName": "flame.fill",
