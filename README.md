@@ -56,7 +56,7 @@ These fields MUST be included in your JSON for each folder:
 | `mediaTypeFilter` | Type of content to show | `"All Content"`, `"Movies Only"`, or `"TV Shows Only"` |
 | `iconName` | SF Symbol name for folder icon | Any valid SF Symbol name (e.g., `"folder.fill"`) |
 | `showIcon` | Whether to display the icon | `true` or `false` |
-| `nameDisplayMode` | Where to show the folder name | `"Inside Folder"` or `"Outside Folder"` |
+| `nameDisplayMode` | Where to show the folder name | `"Inside Folder"` or `"Below Folder"` |
 | `textSize` | Size of text in the folder | `"Small"`, `"Medium"`, or `"Large"` |
 | `textWeight` | Weight of text in the folder | `"Regular"`, `"Medium"`, or `"Bold"` |
 
@@ -121,7 +121,7 @@ These fields can be omitted from your JSON:
     "layout": "Poster",
     "iconName": "flame.fill",
     "backgroundColor": "#FF3B30",
-    "nameDisplayMode": "Outside Folder",
+    "nameDisplayMode": "Below Folder",
     "showIcon": true,
     "mediaTypeFilter": "Movies Only",
     "textSize": "Medium",
@@ -135,7 +135,7 @@ These fields can be omitted from your JSON:
     "layout": "Poster",
     "iconName": "face.smiling",
     "backgroundColor": "#FFCC00",
-    "nameDisplayMode": "Outside Folder",
+    "nameDisplayMode": "Below Folder",
     "showIcon": true,
     "mediaTypeFilter": "Movies Only",
     "textSize": "Medium",
