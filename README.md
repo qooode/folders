@@ -58,7 +58,7 @@ These fields must be included in every folder object:
 | `layout` | String | Shape/dimensions of the folder | `"Poster"`, `"Landscape"`, `"Square"` |
 | `iconName` | String | SF Symbol name for folder icon | Any valid SF Symbol name |
 | `showIcon` | Boolean | Whether to show the folder icon | `true`, `false` |
-| `nameDisplayMode` | String | Where the folder name is displayed | `"Below Folder"`, `"Inside Folder"`, `"none"` |
+| `nameDisplayMode` | String | Where the folder name is displayed | `"Below Folder"`, `"Inside Folder"`, `"Hidden"` |
 | `mediaTypeFilter` | String | Type of media to display | `"All Content"`, `"Movies Only"`, `"TV Shows Only"` |
 | `textSize` | String | Size of text inside the folder | `"Small"`, `"Medium"`, `"Large"` |
 | `textWeight` | String | Weight of text inside the folder | `"Regular"`, `"Medium"`, `"Bold"` |
@@ -100,7 +100,7 @@ Filters the type of content shown in the folder:
 Controls where the folder name is displayed:
 - `"Below Folder"`: Name appears below the folder
 - `"Inside Folder"`: Name appears inside the folder
-- `"none"`: Doesn't show the name at all
+- `"Hidden"`: Doesn't show the name at all
 
 #### `textSize`
 Controls the size of text:
@@ -276,7 +276,7 @@ Before importing, validate your JSON using:
 Ensure your enum values match exactly:
 - Layout: `"Poster"`, `"Landscape"`, `"Square"`
 - DisplayMode: `"Rows"`, `"Grid"`
-- NameDisplayMode: `"Below Folder"`, `"Inside Folder"` (not "Outside Folder"), `"none"`
+- NameDisplayMode: `"Below Folder"`, `"Inside Folder"` (not "Outside Folder"), `"Hidden"`
 - MediaTypeFilter: `"All Content"`, `"Movies Only"`, `"TV Shows Only"`
 - TextSize: `"Small"`, `"Medium"`, `"Large"`
 - TextWeight: `"Regular"`, `"Medium"`, `"Bold"`
